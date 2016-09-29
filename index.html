@@ -422,6 +422,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>Arquillian Pact</h1>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><a class="image" href="https://travis-ci.org/arquillian/arquillian-pact"><img src="https://travis-ci.org/arquillian/arquillian-pact.svg?branch=master" alt="Build Status"></a></span></p>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_what_is_pact">What is Pact?</h2>
 <div class="sectionbody">
@@ -457,7 +464,7 @@ When the client validates that can consume what it is been defined in the contra
 <p>Also notice that thanks of these tests, if anyone changes the client or the server side to not meet the contract, you&#8217;ll detect before it is deployed to production.</p>
 </div>
 <div class="paragraph">
-<p>You can read more about Consumer-Driven contracts at <a href="http://martinfowler.com/articles/consumerDrivenContracts.html" class="bare">http://martinfowler.com/articles/consumerDrivenContracts.html</a> or at book <a href="https://www.manning.com/books/testing-java-microservices">Testing Java Microservices</a> chapter 6.</p>
+<p>You can read more about Consumer-Driven contracts <a href="http://martinfowler.com/articles/consumerDrivenContracts.html">here</a> or at book <a href="https://www.manning.com/books/testing-java-microservices">Testing Java Microservices</a> chapter 6.</p>
 </div>
 </div>
 <div class="sect2">
@@ -509,7 +516,7 @@ Then real responses from provider are checked against the expected responses def
 <h3 id="_arquillian_pact_consumer">Arquillian Pact Consumer</h3>
 <div class="paragraph">
 <p>First thing to do is develop the <strong>Consumer</strong> part of the test.
-Consumer part of Consumer-Driven Contract defines the contract that as consumer understands as well as validates that as a client he can consume it.</p>
+Consumer part of Consumer-Driven Contract defines requirements from the consumer of the API which are then used to develop the client interaction with the API as well as to validate provider implementation.</p>
 </div>
 <div class="sect3">
 <h4 id="_arquillian_pact_consumer_in_container">Arquillian Pact Consumer In Container</h4>
@@ -556,7 +563,7 @@ Nothing new here:</p>
 <div class="colist arabic">
 <ol>
 <li>
-<p>Notice that I am using Chameleon generic container, you can read more at <a href="http://www.lordofthejars.com/2016/09/arquillian-chameleon-for-sake-of.html" class="bare">http://www.lordofthejars.com/2016/09/arquillian-chameleon-for-sake-of.html</a></p>
+<p>Notice that I am using Chameleon generic container, you can read more <a href="http://www.lordofthejars.com/2016/09/arquillian-chameleon-for-sake-of.html">here</a>.</p>
 </li>
 </ol>
 </div>
@@ -662,7 +669,7 @@ Then you can send contract to provider side.</p>
 </div>
 <div class="paragraph">
 <p>Notice that contract and/or mock responses are defined using Pact DSL.
-You can read more about this DSL at <a href="https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-consumer-junit#using-the-pact-dsl-directly" class="bare">https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-consumer-junit#using-the-pact-dsl-directly</a>.</p>
+You can read more about this DSL at <a href="https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-consumer-junit#using-the-pact-dsl-directly">Using the Pact DSL directly</a>.</p>
 </div>
 <div class="paragraph">
 <p>Important things to retain from consumer part:</p>
@@ -681,7 +688,7 @@ You can read more about this DSL at <a href="https://github.com/DiUS/pact-jvm/tr
 </ul>
 </div>
 <div class="paragraph">
-<p>You can see the full example at: <a href="https://github.com/arquillian/arquillian-pact/tree/master/consumer/ftest-incontainer" class="bare">https://github.com/arquillian/arquillian-pact/tree/master/consumer/ftest-incontainer</a></p>
+<p>You can see the full example at: <a href="https://github.com/arquillian/arquillian-pact/tree/master/consumer/ftest-incontainer">ftest-incontainer</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -731,7 +738,7 @@ public class ConsumerTest {
 <p>Code is pretty similar as <a href="#incontainer">previous test</a> but now the consumer client/gateway object is instantiated as plain java object instead of container managed.</p>
 </div>
 <div class="paragraph">
-<p>You can see the full example at: <a href="https://github.com/arquillian/arquillian-pact/tree/master/consumer/ftest" class="bare">https://github.com/arquillian/arquillian-pact/tree/master/consumer/ftest</a></p>
+<p>You can see the full example at: <a href="https://github.com/arquillian/arquillian-pact/tree/master/consumer/ftest">ftest</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -803,6 +810,11 @@ public class ConsumerTest {
  If you want to use another one rather the one defined in your classpath, you can set it here the version.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pactReportDir</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory where contracts are stored.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">target/pacts</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -828,11 +840,23 @@ To specify this, Arquillian Provider provides some class annotations, but of cou
 <dt class="hdlist1">From PactBroker</dt>
 <dd>
 <p><code>@PactBroker(host="${pactbroker.hostname:localhost}", port = "80")</code>
-Notice that in this case system properties with defaults are supported. Also you need to add `org.arquillian.pact:arquillian-pact-provider-pact-broker-loader:${version} dependency.</p>
+Notice that in this case system properties with defaults are supported. Also you need to add <code>org.arquillian.pact:arquillian-pact-provider-pact-broker-loader:${version}</code> dependency.</p>
 </dd>
 <dt class="hdlist1">From Folder</dt>
 <dd>
-<p><code>@PactFolder("subfolder/in/resource/directory")</code></p>
+<p><code>@PactFolder("subfolder/in/resource/directory")</code>
+You can use absolute or relative path. The loader first checks if resource is in classpath and if not checks directory. As with <strong>PactBroker</strong>, you can use system properties.</p>
+</dd>
+<dt class="hdlist1">From Maven</dt>
+<dd>
+<p><code>@PactMavenDependency(value = "org.superbiz:contract:[1.0,]")</code>. Also you need to add <code>org.arquillian.pact:arquillian-pact-provider-maven-loader:${version}</code> dependency.
+In case of specifying a range of versions, this loader will take always the highest one.
+You can use system properties to set values too.</p>
+</dd>
+<dt class="hdlist1">From Git</dt>
+<dd>
+<p><code>@PactGit("https://github.com/lordofthejars/starwarspact.git")</code> Also you need to add <code>org.arquillian.pact:arquillian-pact-provider-git-loader:${version}</code> dependency.
+You can use system properties to set vales too. Inspect <code>@PactGit</code> annotation for all options that accept this loader such as authentication, use branch or tag or set a pact directory.</p>
 </dd>
 </dl>
 </div>
@@ -853,7 +877,7 @@ class <code>MyOwnPactLoader</code> must have a default empty constructor or a co
 </table>
 </div>
 <div class="paragraph">
-<p>You can see an example at <a href="https://github.com/arquillian/arquillian-pact/blob/master/provider/core/src/main/java/org/arquillian/pact/provider/core/loader/PactUrlLoader.java" class="bare">https://github.com/arquillian/arquillian-pact/blob/master/provider/core/src/main/java/org/arquillian/pact/provider/core/loader/PactUrlLoader.java</a></p>
+<p>You can see an example at: <a href="https://github.com/arquillian/arquillian-pact/blob/master/provider/core/src/main/java/org/arquillian/pact/provider/core/loader/PactUrlLoader.java">PactUrlLoader</a> java class.</p>
 </div>
 </div>
 <div class="sect3">
@@ -905,23 +929,16 @@ public class MyServiceProviderTest {
         return ShrinkWrap.create(WebArchive.class).addClass(MyService.class);
     }
 
-    @CurrentConsumer <b class="conum">(4)</b>
-    Consumer consumer;
-
-    @CurrentInteraction <b class="conum">(5)</b>
-    RequestResponseInteraction interaction;
-
-    @ArquillianResource <b class="conum">(6)</b>
+    @ArquillianResource <b class="conum">(4)</b>
     URL webapp;
 
-    @ArquillianResource <b class="conum">(7)</b>
+    @ArquillianResource <b class="conum">(5)</b>
     Target target;
 
     @Test
     public void should_provide_valid_answers() {
-        target.testInteraction(webapp,  <b class="conum">(8)</b>
-                                consumer.getName(),
-                               interaction);
+        target.testInteraction(webapp <b class="conum">(6)</b>
+                                );
     }
 
 }</code></pre>
@@ -937,12 +954,6 @@ public class MyServiceProviderTest {
 </li>
 <li>
 <p>Deploys provider application to app server</p>
-</li>
-<li>
-<p>Arquillian Pact injects consumer contract under test. One provider can serve different consumers, and must meet all their expectations</p>
-</li>
-<li>
-<p>Current request</p>
 </li>
 <li>
 <p>Arquillian injection of URL where application is deployed</p>
@@ -979,7 +990,7 @@ public class MyServiceProviderTest {
 But this is something that it is managed automatically by Arquillian Pact.</p>
 </div>
 <div class="paragraph">
-<p>You can see full example at: <a href="https://github.com/arquillian/arquillian-pact/tree/master/provider/ftest-incontainer" class="bare">https://github.com/arquillian/arquillian-pact/tree/master/provider/ftest-incontainer</a></p>
+<p>You can see full example at: <a href="https://github.com/arquillian/arquillian-pact/tree/master/provider/ftest-incontainer">ftest-incontainer</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -998,12 +1009,6 @@ public class StarWarsProviderTest {
 
     @ClassRule <b class="conum">(1)</b>
     public static final ClientDriverRule embeddedService = new ClientDriverRule(8332);
-
-    @CurrentConsumer
-    Consumer consumer;
-
-    @CurrentInteraction
-    RequestResponseInteraction interaction;
 
     @ArquillianResource
     Target target;
@@ -1025,7 +1030,7 @@ public class StarWarsProviderTest {
 
     @Test
     public void validateProvider() {
-        target.testInteraction(consumer.getName(), interaction);
+        target.testInteraction();
     }
 
 }</code></pre>
@@ -1042,11 +1047,26 @@ public class StarWarsProviderTest {
 </ol>
 </div>
 <div class="paragraph">
-<p>You can see full example at: <a href="https://github.com/arquillian/arquillian-pact/tree/master/provider/ftest" class="bare">https://github.com/arquillian/arquillian-pact/tree/master/provider/ftest</a></p>
+<p>You can see full example at: <a href="https://github.com/arquillian/arquillian-pact/tree/master/provider/ftest">ftest</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_arquillian_pact_consumer_configuration_2">Arquillian Pact Consumer Configuration</h4>
+<h4 id="_arquillian_pact_provider_enrichers">Arquillian Pact Provider Enrichers</h4>
+<div class="paragraph">
+<p>You can enrich your test with current consumer and current request/response interaction by using <code>@CurrentConsumer</code> and <code>CurrentInteraction</code> annotations.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@CurrentConsumer
+Consumer consumer;
+
+@CurrentInteraction
+RequestResponseInteraction interaction;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_arquillian_pact_provider_configuration">Arquillian Pact Provider Configuration</h4>
 <div class="paragraph">
 <p>Arquillian Pact Provider can be configured using Arquillian configuration mechanism (<code>arquillian.xml</code> file or system properties).</p>
 </div>
@@ -1126,7 +1146,7 @@ See this at <a href="#provincon">provider in container</a> example.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-21 12:01:07 CEST
+Last updated 2016-09-29 16:14:08 CEST
 </div>
 </div>
 </body>
